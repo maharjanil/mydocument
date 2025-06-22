@@ -1,406 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Document</title>
-    <style>
-        /* General styles */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background-color: #f4f4f4;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Document</title>
+  <style>
+    /* General styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-color: #f4f4f4;
+    }
 
-        /* Heading styles */
-        h1 {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+    /* Heading styles */
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
 
-        /* Dropdown styles */
-        .dropdown {
-            width: 300px;
-            margin-bottom: 20px;
-        }
+    /* Dropdown styles */
+    .dropdown {
+      width: 300px;
+      margin-bottom: 20px;
+    }
 
-        .dropdown select {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            cursor: pointer;
-        }
+    .dropdown select {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      cursor: pointer;
+    }
 
-        /* Card styles */
-        .card {
-            margin-top: 20px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 300px;
-            background-color: #f9f9f9;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            display: none; /* Hide card by default */
-        }
+    /* Card styles */
+    .card {
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 300px;
+      background-color: #f9f9f9;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      display: none; /* Hide card by default */
+    }
 
-        /* Style for <h3> inside the card */
-        .card h3 {
-            font-size: 20px;
-            color: #007BFF;
-            text-align: center;
-            margin-top: 0;
-        }
+    .card h3 {
+      font-size: 20px;
+      color: #007BFF;
+      text-align: center;
+      margin-top: 0;
+    }
 
-        .card p {
-            margin: 5px 0;
-            font-size: 14px;
-            color: #555;
-        }
+    .card p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #555;
+    }
 
-        /* Modal styles */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-            justify-content: center;
-            align-items: center;
-        }
+    /* Footer styles */
+    footer {
+      margin-top: 50px;
+      padding: 20px;
+      background-color: none;
+      color: black;
+      text-align: center;
+      width: 100%;
+    }
 
-        .modal-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            width: 250px; /* Smaller width for the modal */
-            text-align: center;
-        }
+    footer p {
+      margin: 5px 0;
+      font-size: 10px;
+    }
 
-        .modal-content input {
-            width: 80%; /* Smaller width for the input field */
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
+    footer a {
+      color: #007BFF;
+      text-decoration: none;
+    }
 
-        .modal-content button {
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            display: inline-block; /* Change to inline-block for side-by-side buttons */
-            margin: 5px; /* Add margin for spacing */
-        }
-
-        .modal-content button:hover {
-            background-color: #0056b3;
-        }
-
-        #cancel-password {
-            background-color: #dc3545; /* Red color for Cancel button */
-        }
-
-        #cancel-password:hover {
-            background-color: #c82333; /* Darker red on hover */
-        }
-
-        .error {
-            color: red;
-            margin-top: 10px;
-            display: none;
-        }
-
-        /* Footer styles */
-        footer {
-            margin-top: 50px;
-            padding: 20px;
-            background-color: ;
-            color: black;
-            text-align: center;
-            width: 100%;
-        }
-
-        footer p {
-            margin: 5px 0;
-            font-size: 10px;
-        }
-
-        footer a {
-            color: #007BFF;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <!-- Heading -->
-    <h1>My Documents</h1>
+  <!-- Heading -->
+  <h1>My Documents</h1>
 
-    <!-- Dropdown Menu -->
-    <div class="dropdown">
-        <select id="dropdown-menu">
-            <option value="">Select an option</option>
-            <option value="citizenship">Citizenship</option>
-            <option value="passport">Passport</option>
-            <option value="kukl">KUKL</option>
-            <option value="nead">NEA-Dhalachhen</option>
-            <option value="neag">NEA-Gwarko</option>
-            <option value="laxb">Laxmi Sunrise Bank</option>
-            <option value="gime">Global IME Bank</option>
-            <option value="stck">Share/Stock</option>
- 	    <option value="licn">Licence</option>
-	    <option value="pan">PAN Card</option>
-	    <option value="voter">Voter Card</option>
-	    <option value="nid">National ID</option>
-        </select>
-    </div>
+  <!-- Dropdown Menu -->
+  <div class="dropdown">
+    <select id="dropdown-menu">
+      <option value="">Select an option</option>
+      <option value="citizenship">Citizenship</option>
+      <option value="passport">Passport</option>
+      <option value="kukl">KUKL</option>
+      <option value="nead">NEA-Dhalachhen</option>
+      <option value="neag">NEA-Gwarko</option>
+      <option value="laxb">Laxmi Sunrise Bank</option>
+      <option value="gime">Global IME Bank</option>
+      <option value="stck">Share/Stock</option>
+      <option value="licn">Licence</option>
+      <option value="pan">PAN Card</option>
+      <option value="voter">Voter Card</option>
+      <option value="nid">National ID</option>
+    </select>
+  </div>
 
-    <!-- Card to display details -->
-    <div id="card" class="card">
-        <p id="card-content">Select an option to view details.</p>
-    </div>
+  <!-- Card to display details -->
+  <div id="card" class="card">
+    <p id="card-content">Select an option to view details.</p>
+  </div>
 
-    <!-- Password Modal -->
-    <div id="password-modal" class="modal">
-        <div class="modal-content">
-            <h3>Enter Password</h3>
-            <input type="password" id="password-input" placeholder="Password">
-            <button id="submit-password">Submit</button>
-            <button id="cancel-password">Cancel</button> <!-- Add Cancel Button -->
-            <p id="error-message" class="error">Incorrect password. Please try again.</p>
-        </div>
-    </div>
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 My Documents. All rights reserved.</p>
+  </footer>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 My Documents. All rights reserved.</p>
-       <!-- <p>Contact: <a href="mailto:info@example.com">info@example.com</a></p>-->
-    </footer>
+  <script>
+    // Get elements
+    const dropdownMenu = document.getElementById('dropdown-menu');
+    const card = document.getElementById('card');
+    const cardContent = document.getElementById('card-content');
 
-    <script>
-        // Get elements
-        const dropdownMenu = document.getElementById('dropdown-menu');
-        const card = document.getElementById('card');
-        const cardContent = document.getElementById('card-content');
-        const passwordModal = document.getElementById('password-modal');
-        const passwordInput = document.getElementById('password-input');
-        const submitPassword = document.getElementById('submit-password');
-        const cancelPassword = document.getElementById('cancel-password'); // Get Cancel Button
-        const errorMessage = document.getElementById('error-message');
+    // Define details for each option
+    const details = {
+      citizenship: `
+        <h3>Citizenship Details</h3>
+        <hr>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Number:-</strong>28-01-065-02165</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Issued Date:-</strong>2065-04-15 B.S.</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Issued By:-</strong>DAO, Lalitpur</p>
+      `,
+      passport: `
+        <h3>Passport Details</h3>
+        <hr>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Number:-</strong><span>09954740</span></p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Issued Date:-</strong>17th August 2016</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Expiry Date:-</strong>16th August 2026</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Issued By:-</strong>MOFA</p>
+      `,
+      kukl: `
+        <h3>KUKL Details</h3>
+        <hr>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Name:-</strong> Kaji Lal Maharjan</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Address:-</strong> Tyagal</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Area No.:-</strong> 07-03-12</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Customer No:-</strong> 1118036130</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Branch:-</strong> LALITPUR</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Connection No.:-</strong> 512</p>
+      `,
+      nead: `
+        <h3>NEA-Dhalachhen Details</h3>
+        <hr>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Customer Name:</strong>Kaji Bdr. Maharjan</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Consumer Id:</strong>41203</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Sc. Number:</strong>006.22.018</p>
+      `,
+      neag: `
+        <h3>NEA-Gwarko Details</h3>
+        <hr>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Customer Name:</strong>Kaji Lal Maharjan</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Consumer Id:</strong>47204</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Sc. Number:</strong>038.08.025</p>
+      `,
+      laxb: `
+        <h3>Laxmi Sunrise Bank Detail</h3>
+        <hr>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>A/C Number:</strong> 00710124352018</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>A/C Opened Date:</strong> -</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Debit Card Number:</strong> -</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Credit Card Number:</strong> -</p>
+        <hr>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Contact Number:</strong> -</p>
+      `,
+      gime: `
+        <h3>Global IME Bank Details</h3>
+        <hr>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>A/C Number:</strong>08807010006081</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>A/C Opened Date:</strong> -</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Debit Card Number:</strong> -</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Credit Card Number:</strong> -</p>
+        <hr>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Contact Number:</strong> -</p>
+      `,
+      stck: `
+        <h3>Share/Stock Details</h3>
+        <hr>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>BOID Number:</strong> 1301070000526221</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Open Date:</strong>2019-07-11 A.D.</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>DMat A/C Expiry:</strong>2082-03-31 B.S.</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Mero Share Expiry:</strong>2025-07-17 A.D.</p>
+      `,
+      licn: `
+        <h3>Licence Details</h3>
+        <hr>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Number:-</strong>01-06-01003951</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Issued Date:-</strong>18-01-2022</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Expiry Date:-</strong>17-01-2027</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Issued By:-</strong>DoTM</p>
+      `,
+      pan: `
+        <h3>PAN Card Details</h3>
+        <hr>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Number:-</strong>111677845</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Issued Date:-</strong>2076-04-02 B.S.</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Issued By:-</strong>Inland Revenue Department</p>
+      `,
+      voter: `
+        <h3>Voter Card Details</h3>
+        <hr>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Number:-</strong>09954740</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Issued Date:-</strong>2065-04-15 B.S.</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Issued By:-</strong>CDO, Lalitpur</p>
+      `,
+      nid: `
+        <h3>National ID Details</h3>
+        <hr>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Number:-</strong>746-461-485-4</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Issued Date:-</strong>N/A</p>
+        <p style="display: flex; justify-content: space-between;">
+        <strong>Issued By:-</strong>N/A</p>
+      `
+    };
 
-        // Define details for each option
-        const details = {
-            citizenship: `
-                <h3>Citizenship Details</h3>
-		<hr>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Number:-</strong>28-01-065-02165</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Issued Date:-</strong>2065-04-15 B.S.</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Issued By:-</strong>CDO, Lalitpur</p>
-            `,
-            passport: `
-                <h3>Passport Details</h3>
-		<hr>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Number:-</strong><span>09954740</span></p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Issued Date:-</strong>17th August 2016</p>
-               <p style="display: flex; justify-content: space-between;">
-                <strong>Expiry Date:-</strong>16th August 2026</p>
-		<p style="display: flex; justify-content: space-between;">
-		<strong>Issued By:-</strong>MOFA</p>
-            `,
-            kukl: `
-                <h3>KUKL Details</h3>
-		<hr>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Name:-</strong> Kaji Lal Maharjan</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Address:-</strong> Tyagal</p>
-               <p style="display: flex; justify-content: space-between;">
-                <strong>Area No.:-</strong> 07-03-12</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Customer No:-</strong> 1118036130</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Branch:-</strong> LALITPUR</p>
-               <p style="display: flex; justify-content: space-between;">
-                <strong>Connection No.:-</strong> 512</p>
-            `,
-            nead: `
-                <h3>NEA-Dhalachhen Details</h3>
-                <hr>
-                <p style="display: flex; justify-content: space-between;">
-		<strong>Customer Name:</strong>Kaji Bdr. Maharjan</p>
-                <p style="display: flex; justify-content: space-between;">
-		<strong>Consumer Id:</strong>41203</p>
-             	<p style="display: flex; justify-content: space-between;">
-		<strong>Sc. Number:</strong>006.22.018</p>
-            `,
-            neag: `
-                <h3>NEA-Gwarko Details</h3>
-                <hr>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Customer Name:</strong>Kaji Lal Maharjan</p>
-                <p style="display: flex; justify-content: space-between;">
-		<strong>Consumer Id:</strong>47204</p>
-                <p style="display: flex; justify-content: space-between;">
-		<strong>Sc. Number:</strong>038.08.025</p>
-            `,
-            laxb: `
-                <h3>Laxmi Sunrise Bank Detail</h3>
-                <hr>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>A/C Number:</strong> -</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>A/C Opened Date:</strong> -</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Debit Card Number:</strong> -</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Credit Card Number:</strong> -</p>
-                <hr>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Contact Number:</strong> -</p>
-            `,
-            gime: `
-                <h3>Global IME Bank Details</h3>
-                <hr>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>A/C Number:</strong> -</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>A/C Opened Date:</strong> -</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Debit Card Number:</strong> -</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Credit Card Number:</strong> -</p>
-                <hr>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Contact Number:</strong> -</p>
-            `,
-            stck: `
-                <h3>Share/Stock Details</h3>
-                <hr>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>BOID Number:</strong> -</p>
-               <p style="display: flex; justify-content: space-between;">
-                <strong>Open Date:</strong> -</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>DMat A/C Expiry:</strong> -</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Mero Share Expiry:</strong> -</p>
-            `,
-            licn: `
-                <h3>Licence Details</h3>
-		<hr>
-               <p style="display: flex; justify-content: space-between;">
-                <strong>Number:-</strong>01-06-01003951</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Issued Date:-</strong>18-01-2022</p>
-               <p style="display: flex; justify-content: space-between;">
-                <strong>Expiry Date:-</strong>17-01-2027</p>
-		           <p style="display: flex; justify-content: space-between;">
-		            <strong>Issued By:-</strong>N/A</p>
-	    `,
-            pan: `
-                <h3>PAN Card Details</h3>
-		<hr>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Number:-</strong>111677845</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Issued Date:-</strong>2076-04-02 B.S.</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Issued By:-</strong>Inland Reveneu Department</p>
-	    `,
-            voter: `
-                <h3>Voter Card Details</h3>
-		<hr>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Number:-</strong>09954740</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Issued Date:-</strong>2065-04-15 B.S.</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Issued By:-</strong>CDO, Lalitpur</p>
-	    `,
-            nid: `
-                <h3>National ID Details</h3>
-		<hr>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Number:-</strong>746-461-485-4</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Issued Date:-</strong>N/A</p>
-                <p style="display: flex; justify-content: space-between;">
-                <strong>Issued By:-</strong>N/A</p>
-	 `
-        };
+    // Add event listener to the dropdown
+    dropdownMenu.addEventListener('change', (e) => {
+      const selectedOption = e.target.value;
 
-        // Predefined password
-        const correctPassword = ""; // Change this to your desired password
-
-        // Variable to store the selected option
-        let selectedOption = null;
-
-        // Add event listener to the dropdown
-        dropdownMenu.addEventListener('change', (e) => {
-            selectedOption = e.target.value; // Get the selected option
-
-            if (selectedOption) {
-                // Show the password modal
-                passwordModal.style.display = 'flex';
-            } else {
-                card.style.display = 'none'; // Hide the card if "Select an option" is chosen
-            }
-        });
-
-        // Add event listener to the Submit button in the modal
-        submitPassword.addEventListener('click', () => {
-            const enteredPassword = passwordInput.value;
-
-            if (enteredPassword === correctPassword) {
-                // Hide the modal
-                passwordModal.style.display = 'none';
-                // Clear the password input
-                passwordInput.value = '';
-                // Hide the error message
-                errorMessage.style.display = 'none';
-                // Display the details in the card
-                cardContent.innerHTML = details[selectedOption];
-                card.style.display = 'block';
-            } else {
-                // Show error message
-                errorMessage.style.display = 'block';
-            }
-        });
-
-        // Add event listener to the Cancel button in the modal
-        cancelPassword.addEventListener('click', () => {
-            passwordModal.style.display = 'none'; // Hide the modal
-            errorMessage.style.display = 'none'; // Hide the error message
-            passwordInput.value = ''; // Clear the password input
-            dropdownMenu.selectedIndex = 0; // Reset dropdown to "Select an option"
-        });
-    </script>
+      if (selectedOption && details[selectedOption]) {
+        cardContent.innerHTML = details[selectedOption];
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  </script>
 </body>
 </html>
