@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Document</title>
+  <title>My Documents</title>
   <style>
     /* General styles */
     body {
@@ -12,9 +12,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       min-height: 100vh;
       background-color: #f4f4f4;
+      padding: 20px 0 80px;
+      box-sizing: border-box;
     }
 
     /* Heading styles */
@@ -50,7 +52,7 @@
       width: 300px;
       background-color: #f9f9f9;
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-      display: none; /* Hide card by default */
+      display: none;
     }
 
     .card h3 {
@@ -66,14 +68,46 @@
       color: #555;
     }
 
+    /* Image Section */
+    #image-section {
+      margin-top: 20px;
+      width: 300px;
+      display: none; /* Hidden by default */
+      text-align: center;
+    }
+
+    #document-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    /* Toggle Button */
+    #toggle-image-btn {
+      margin-top: 15px;
+      padding: 8px 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      display: none; /* Hidden until an option is selected */
+    }
+
+    #toggle-image-btn:hover {
+      background-color: #0056b3;
+    }
+
     /* Footer styles */
     footer {
       margin-top: 50px;
       padding: 20px;
-      background-color: none;
       color: black;
       text-align: center;
       width: 100%;
+      background-color: transparent;
     }
 
     footer p {
@@ -106,7 +140,7 @@
       <option value="neag">NEA-Gwarko</option>
       <option value="laxb">Laxmi Sunrise Bank</option>
       <option value="gime">Global IME Bank</option>
-      <option value="nab">Nabil Bank</option
+      <option value="nab">Nabil Bank</option>
       <option value="stck">Share/Stock</option>
       <option value="licn">Licence</option>
       <option value="pan">PAN Card</option>
@@ -117,7 +151,15 @@
 
   <!-- Card to display details -->
   <div id="card" class="card">
-    <p id="card-content">Select an option to view details.</p>
+    <div id="card-content">Select an option to view details.</div>
+  </div>
+
+  <!-- Toggle Button -->
+  <button id="toggle-image-btn">Show Image</button>
+
+  <!-- Separate Image Section -->
+  <div id="image-section">
+    <img id="document-image" src="" alt="Document Image" />
   </div>
 
   <!-- Footer -->
@@ -130,8 +172,11 @@
     const dropdownMenu = document.getElementById('dropdown-menu');
     const card = document.getElementById('card');
     const cardContent = document.getElementById('card-content');
+    const toggleBtn = document.getElementById('toggle-image-btn');
+    const imageSection = document.getElementById('image-section');
+    const documentImage = document.getElementById('document-image');
 
-    // Define details for each option
+    // Document details
     const details = {
       citizenship: `
         <h3>Citizenship Details</h3>
@@ -292,15 +337,71 @@
       `
     };
 
-    // Add event listener to the dropdown
+    // Placeholder image URLs
+    const images = {
+      citizenship: "images/citizenship.jpg",
+      passport: "https://via.placeholder.com/300x200?text=Passport",
+      kukl: "https://via.placeholder.com/300x200?text=KUKL+Bill",
+      nead: "https://via.placeholder.com/300x200?text=NEA-Dhalachhen",
+      neag: "https://via.placeholder.com/300x200?text=NEA-Gwarko",
+      laxb: "https://via.placeholder.com/300x200?text=Laxmi+Sunrise+Bank",
+      gime: "https://via.placeholder.com/300x200?text=Global+IME+Bank",
+      nab: "https://via.placeholder.com/300x200?text=Nabil+Bank",
+      stck: "https://via.placeholder.com/300x200?text=Share+Certificate",
+      licn: "https://via.placeholder.com/300x200?text=Driving+Licence",
+      pan: "https://via.placeholder.com/300x200?text=PAN+Card",
+      voter: "https://via.placeholder.com/300x200?text=Voter+ID",
+      nid: "https://via.placeholder.com/300x200?text=National+ID"
+    };
+
+    let currentImageSrc = '';
+    let isImageVisible = false;
+
+    // Event listener for dropdown change
     dropdownMenu.addEventListener('change', (e) => {
       const selectedOption = e.target.value;
 
       if (selectedOption && details[selectedOption]) {
+        // Show card with details
         cardContent.innerHTML = details[selectedOption];
         card.style.display = 'block';
+
+        // Set current image (but don't show yet)
+        if (images[selectedOption]) {
+          currentImageSrc = images[selectedOption];
+          toggleBtn.style.display = 'block';
+          toggleBtn.textContent = 'Show Image';
+          isImageVisible = false;
+          imageSection.style.display = 'none';
+        } else {
+          toggleBtn.style.display = 'none';
+          currentImageSrc = '';
+        }
       } else {
+        // Hide everything
         card.style.display = 'none';
+        toggleBtn.style.display = 'none';
+        imageSection.style.display = 'none';
+        currentImageSrc = '';
+        isImageVisible = false;
+      }
+    });
+
+    // Toggle image visibility
+    toggleBtn.addEventListener('click', () => {
+      if (!currentImageSrc) return;
+
+      if (isImageVisible) {
+        // Hide image
+        imageSection.style.display = 'none';
+        toggleBtn.textContent = 'Show Image';
+        isImageVisible = false;
+      } else {
+        // Show image
+        documentImage.src = currentImageSrc;
+        imageSection.style.display = 'block';
+        toggleBtn.textContent = 'Hide Image';
+        isImageVisible = true;
       }
     });
   </script>
