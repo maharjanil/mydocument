@@ -72,7 +72,7 @@
     #image-section {
       margin-top: 20px;
       width: 300px;
-      display: none; /* Hidden by default */
+      display: none;
       text-align: center;
     }
 
@@ -83,21 +83,41 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
-    /* Toggle Button */
-    #toggle-image-btn {
+    /* Buttons Container */
+    .buttons {
       margin-top: 15px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .btn {
       padding: 8px 16px;
-      background-color: #007BFF;
-      color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
       font-size: 14px;
-      display: none; /* Hidden until an option is selected */
+      transition: background 0.2s;
+    }
+
+    #toggle-image-btn {
+      background-color: #007BFF;
+      color: white;
+      display: none;
     }
 
     #toggle-image-btn:hover {
       background-color: #0056b3;
+    }
+
+    #download-btn {
+      background-color: #28a745;
+      color: white;
+      display: none;
+    }
+
+    #download-btn:hover {
+      background-color: #218838;
     }
 
     /* Footer styles */
@@ -154,8 +174,11 @@
     <div id="card-content">Select an option to view details.</div>
   </div>
 
-  <!-- Toggle Button -->
-  <button id="toggle-image-btn">Show Image</button>
+  <!-- Buttons: Show/Hide + Download -->
+  <div class="buttons">
+    <button id="toggle-image-btn" class="btn">Show Image</button>
+    <button id="download-btn" class="btn">Download Image</button>
+  </div>
 
   <!-- Separate Image Section -->
   <div id="image-section">
@@ -173,171 +196,28 @@
     const card = document.getElementById('card');
     const cardContent = document.getElementById('card-content');
     const toggleBtn = document.getElementById('toggle-image-btn');
+    const downloadBtn = document.getElementById('download-btn');
     const imageSection = document.getElementById('image-section');
     const documentImage = document.getElementById('document-image');
 
-    // Document details
+    // Document details (unchanged)
     const details = {
-      citizenship: `
-        <h3>Citizenship Details</h3>
-        <hr>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Number:-</strong>28-01-065-02165</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Issued Date:-</strong>2065-04-15 B.S.</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Issued By:-</strong>DAO, Lalitpur</p>
-      `,
-      passport: `
-        <h3>Passport Details</h3>
-        <hr>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Number:-</strong><span>09954740</span></p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Issued Date:-</strong>17th August 2016</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Expiry Date:-</strong>16th August 2026</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Issued By:-</strong>MOFA</p>
-      `,
-      kukl: `
-        <h3>KUKL Details</h3>
-        <hr>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Name:-</strong> Kaji Lal Maharjan</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Address:-</strong> Tyagal</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Area No.:-</strong> 07-03-12</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Customer No:-</strong> 1118036130</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Branch:-</strong> LALITPUR</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Connection No.:-</strong> 512</p>
-      `,
-      nead: `
-        <h3>NEA-Dhalachhen Details</h3>
-        <hr>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Customer Name:</strong>Kaji Bdr. Maharjan</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Consumer Id:</strong>41203</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Sc. Number:</strong>006.22.018</p>
-      `,
-      neag: `
-        <h3>NEA-Gwarko Details</h3>
-        <hr>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Customer Name:</strong>Kaji Lal Maharjan</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Consumer Id:</strong>47204</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Sc. Number:</strong>038.08.025</p>
-      `,
-      laxb: `
-        <h3>Laxmi Sunrise Bank Detail</h3>
-        <hr>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>A/C Number:</strong> 00710124352018</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>A/C Opened Date:</strong> -</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Debit Card Number:</strong> -</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Credit Card Number:</strong> -</p>
-        <hr>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Contact Number:</strong> -</p>
-      `,
-      gime: `
-        <h3>Global IME Bank Details</h3>
-        <hr>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>A/C Number:</strong>08807010006081</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>A/C Opened Date:</strong> -</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Debit Card Number:</strong> -</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Credit Card Number:</strong> -</p>
-        <hr>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Contact Number:</strong> -</p>
-      `,
-      nab: `
-        <h3>Nabil Bank Details</h3>
-        <hr>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>A/C Number:</strong>18310017512622</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>A/C Opened Date:</strong> -</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Debit Card Number:</strong> -</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Credit Card Number:</strong> -</p>
-        <hr>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Contact Number:</strong> -</p>
-      `,
-      stck: `
-        <h3>Share/Stock Details</h3>
-        <hr>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>BOID Number:</strong> 1301070000526221</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Open Date:</strong>2019-07-11 A.D.</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>DMat A/C Expiry:</strong>2082-03-31 B.S.</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Mero Share Expiry:</strong>2025-07-17 A.D.</p>
-      `,
-      licn: `
-        <h3>Licence Details</h3>
-        <hr>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Number:-</strong>01-06-01003951</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Issued Date:-</strong>18-01-2022</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Expiry Date:-</strong>17-01-2027</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Issued By:-</strong>DoTM</p>
-      `,
-      pan: `
-        <h3>PAN Card Details</h3>
-        <hr>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Number:-</strong>111677845</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Issued Date:-</strong>2076-04-02 B.S.</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Issued By:-</strong>Inland Revenue Department</p>
-      `,
-      voter: `
-        <h3>Voter Card Details</h3>
-        <hr>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Number:-</strong>09954740</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Issued Date:-</strong>2065-04-15 B.S.</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Issued By:-</strong>CDO, Lalitpur</p>
-      `,
-      nid: `
-        <h3>National ID Details</h3>
-        <hr>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Number:-</strong>746-461-485-4</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Issued Date:-</strong>N/A</p>
-        <p style="display: flex; justify-content: space-between;">
-        <strong>Issued By:-</strong>N/A</p>
-      `
+      citizenship: `<h3>Citizenship Details</h3><hr><p style="display: flex; justify-content: space-between;"><strong>Number:-</strong>28-01-065-02165</p><p style="display: flex; justify-content: space-between;"><strong>Issued Date:-</strong>2065-04-15 B.S.</p><p style="display: flex; justify-content: space-between;"><strong>Issued By:-</strong>DAO, Lalitpur</p>`,
+      passport: `<h3>Passport Details</h3><hr><p style="display: flex; justify-content: space-between;"><strong>Number:-</strong><span>09954740</span></p><p style="display: flex; justify-content: space-between;"><strong>Issued Date:-</strong>17th August 2016</p><p style="display: flex; justify-content: space-between;"><strong>Expiry Date:-</strong>16th August 2026</p><p style="display: flex; justify-content: space-between;"><strong>Issued By:-</strong>MOFA</p>`,
+      kukl: `<h3>KUKL Details</h3><hr><p style="display: flex; justify-content: space-between;"><strong>Name:-</strong> Kaji Lal Maharjan</p><p style="display: flex; justify-content: space-between;"><strong>Address:-</strong> Tyagal</p><p style="display: flex; justify-content: space-between;"><strong>Area No.:-</strong> 07-03-12</p><p style="display: flex; justify-content: space-between;"><strong>Customer No:-</strong> 1118036130</p><p style="display: flex; justify-content: space-between;"><strong>Branch:-</strong> LALITPUR</p><p style="display: flex; justify-content: space-between;"><strong>Connection No.:-</strong> 512</p>`,
+      nead: `<h3>NEA-Dhalachhen Details</h3><hr><p style="display: flex; justify-content: space-between;"><strong>Customer Name:</strong>Kaji Bdr. Maharjan</p><p style="display: flex; justify-content: space-between;"><strong>Consumer Id:</strong>41203</p><p style="display: flex; justify-content: space-between;"><strong>Sc. Number:</strong>006.22.018</p>`,
+      neag: `<h3>NEA-Gwarko Details</h3><hr><p style="display: flex; justify-content: space-between;"><strong>Customer Name:</strong>Kaji Lal Maharjan</p><p style="display: flex; justify-content: space-between;"><strong>Consumer Id:</strong>47204</p><p style="display: flex; justify-content: space-between;"><strong>Sc. Number:</strong>038.08.025</p>`,
+      laxb: `<h3>Laxmi Sunrise Bank Detail</h3><hr><p style="display: flex; justify-content: space-between;"><strong>A/C Number:</strong> 00710124352018</p><p style="display: flex; justify-content: space-between;"><strong>A/C Opened Date:</strong> -</p><p style="display: flex; justify-content: space-between;"><strong>Debit Card Number:</strong> -</p><p style="display: flex; justify-content: space-between;"><strong>Credit Card Number:</strong> -</p><hr><p style="display: flex; justify-content: space-between;"><strong>Contact Number:</strong> -</p>`,
+      gime: `<h3>Global IME Bank Details</h3><hr><p style="display: flex; justify-content: space-between;"><strong>A/C Number:</strong>08807010006081</p><p style="display: flex; justify-content: space-between;"><strong>A/C Opened Date:</strong> -</p><p style="display: flex; justify-content: space-between;"><strong>Debit Card Number:</strong> -</p><p style="display: flex; justify-content: space-between;"><strong>Credit Card Number:</strong> -</p><hr><p style="display: flex; justify-content: space-between;"><strong>Contact Number:</strong> -</p>`,
+      nab: `<h3>Nabil Bank Details</h3><hr><p style="display: flex; justify-content: space-between;"><strong>A/C Number:</strong>18310017512622</p><p style="display: flex; justify-content: space-between;"><strong>A/C Opened Date:</strong> -</p><p style="display: flex; justify-content: space-between;"><strong>Debit Card Number:</strong> -</p><p style="display: flex; justify-content: space-between;"><strong>Credit Card Number:</strong> -</p><hr><p style="display: flex; justify-content: space-between;"><strong>Contact Number:</strong> -</p>`,
+      stck: `<h3>Share/Stock Details</h3><hr><p style="display: flex; justify-content: space-between;"><strong>BOID Number:</strong> 1301070000526221</p><p style="display: flex; justify-content: space-between;"><strong>Open Date:</strong>2019-07-11 A.D.</p><p style="display: flex; justify-content: space-between;"><strong>DMat A/C Expiry:</strong>2082-03-31 B.S.</p><p style="display: flex; justify-content: space-between;"><strong>Mero Share Expiry:</strong>2025-07-17 A.D.</p>`,
+      licn: `<h3>Licence Details</h3><hr><p style="display: flex; justify-content: space-between;"><strong>Number:-</strong>01-06-01003951</p><p style="display: flex; justify-content: space-between;"><strong>Issued Date:-</strong>18-01-2022</p><p style="display: flex; justify-content: space-between;"><strong>Expiry Date:-</strong>17-01-2027</p><p style="display: flex; justify-content: space-between;"><strong>Issued By:-</strong>DoTM</p>`,
+      pan: `<h3>PAN Card Details</h3><hr><p style="display: flex; justify-content: space-between;"><strong>Number:-</strong>111677845</p><p style="display: flex; justify-content: space-between;"><strong>Issued Date:-</strong>2076-04-02 B.S.</p><p style="display: flex; justify-content: space-between;"><strong>Issued By:-</strong>Inland Revenue Department</p>`,
+      voter: `<h3>Voter Card Details</h3><hr><p style="display: flex; justify-content: space-between;"><strong>Number:-</strong>09954740</p><p style="display: flex; justify-content: space-between;"><strong>Issued Date:-</strong>2065-04-15 B.S.</p><p style="display: flex; justify-content: space-between;"><strong>Issued By:-</strong>CDO, Lalitpur</p>`,
+      nid: `<h3>National ID Details</h3><hr><p style="display: flex; justify-content: space-between;"><strong>Number:-</strong>746-461-485-4</p><p style="display: flex; justify-content: space-between;"><strong>Issued Date:-</strong>N/A</p><p style="display: flex; justify-content: space-between;"><strong>Issued By:-</strong>N/A</p>`
     };
 
-    // Placeholder image URLs
+    // Image URLs (placeholders)
     const images = {
       citizenship: "images/citizenship.jpg",
       passport: "https://via.placeholder.com/300x200?text=Passport",
@@ -354,54 +234,104 @@
       nid: "https://via.placeholder.com/300x200?text=National+ID"
     };
 
-    let currentImageSrc = '';
+    // Friendly names for download filenames
+    const fileNames = {
+      citizenship: "Citizenship.jpg",
+      passport: "Passport.jpg",
+      kukl: "KUKL_Bill.jpg",
+      nead: "NEA_Dhalachhen.jpg",
+      neag: "NEA_Gwarko.jpg",
+      laxb: "Laxmi_Sunrise_Bank.jpg",
+      gime: "Global_IME_Bank.jpg",
+      nab: "Nabil_Bank.jpg",
+      stck: "Share_Stock.jpg",
+      licn: "Driving_Licence.jpg",
+      pan: "PAN_Card.jpg",
+      voter: "Voter_Card.jpg",
+      nid: "National_ID.jpg"
+    };
+
+    let currentOption = '';
     let isImageVisible = false;
-
-    // Event listener for dropdown change
-    dropdownMenu.addEventListener('change', (e) => {
-      const selectedOption = e.target.value;
-
-      if (selectedOption && details[selectedOption]) {
-        // Show card with details
-        cardContent.innerHTML = details[selectedOption];
-        card.style.display = 'block';
-
-        // Set current image (but don't show yet)
-        if (images[selectedOption]) {
-          currentImageSrc = images[selectedOption];
-          toggleBtn.style.display = 'block';
-          toggleBtn.textContent = 'Show Image';
-          isImageVisible = false;
-          imageSection.style.display = 'none';
-        } else {
-          toggleBtn.style.display = 'none';
-          currentImageSrc = '';
-        }
-      } else {
-        // Hide everything
-        card.style.display = 'none';
-        toggleBtn.style.display = 'none';
-        imageSection.style.display = 'none';
-        currentImageSrc = '';
-        isImageVisible = false;
-      }
-    });
 
     // Toggle image visibility
     toggleBtn.addEventListener('click', () => {
-      if (!currentImageSrc) return;
+      if (!currentOption) return;
 
       if (isImageVisible) {
-        // Hide image
         imageSection.style.display = 'none';
         toggleBtn.textContent = 'Show Image';
+        downloadBtn.style.display = 'none';
         isImageVisible = false;
       } else {
-        // Show image
-        documentImage.src = currentImageSrc;
+        documentImage.src = images[currentOption];
         imageSection.style.display = 'block';
         toggleBtn.textContent = 'Hide Image';
+        downloadBtn.style.display = 'block';
         isImageVisible = true;
+      }
+    });
+
+    // Download image function
+    downloadBtn.addEventListener('click', () => {
+      if (!currentOption || !isImageVisible) return;
+
+      const img = new Image();
+      img.crossOrigin = "anonymous"; // Required for some external images
+      img.src = images[currentOption];
+
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+
+        // Convert to blob and download
+        canvas.toBlob(blob => {
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = fileNames[currentOption] || 'document.jpg';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(link.href);
+        }, 'image/jpeg', 0.9);
+      };
+
+      img.onerror = () => {
+        alert('Failed to load image for download.');
+      };
+    });
+
+    // Handle dropdown change
+    dropdownMenu.addEventListener('change', (e) => {
+      const selectedOption = e.target.value;
+      currentOption = selectedOption;
+      isImageVisible = false;
+
+      if (selectedOption && details[selectedOption]) {
+        cardContent.innerHTML = details[selectedOption];
+        card.style.display = 'block';
+
+        // Show toggle button if image exists
+        if (images[selectedOption]) {
+          toggleBtn.style.display = 'block';
+          toggleBtn.textContent = 'Show Image';
+          downloadBtn.style.display = 'none';
+        } else {
+          toggleBtn.style.display = 'none';
+          downloadBtn.style.display = 'none';
+        }
+
+        // Hide image section
+        imageSection.style.display = 'none';
+      } else {
+        card.style.display = 'none';
+        toggleBtn.style.display = 'none';
+        downloadBtn.style.display = 'none';
+        imageSection.style.display = 'none';
+        currentOption = '';
       }
     });
   </script>
