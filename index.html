@@ -76,11 +76,12 @@
       text-align: center;
     }
 
-    #document-image {
+    #image-section img {
       max-width: 100%;
       height: auto;
       border-radius: 6px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      margin-top: 10px;
     }
 
     /* Buttons Container */
@@ -180,10 +181,8 @@
     <button id="download-btn" class="btn">Download Image</button>
   </div>
 
-  <!-- Separate Image Section -->
-  <div id="image-section">
-    <img id="document-image" src="" alt="Document Image" />
-  </div>
+  <!-- Image Section (supports multiple images) -->
+  <div id="image-section"></div>
 
   <!-- Footer -->
   <footer>
@@ -198,9 +197,8 @@
     const toggleBtn = document.getElementById('toggle-image-btn');
     const downloadBtn = document.getElementById('download-btn');
     const imageSection = document.getElementById('image-section');
-    const documentImage = document.getElementById('document-image');
 
-    // Document details (unchanged)
+    // Document details
     const details = {
       citizenship: `<h3>Citizenship Details</h3><hr><p style="display: flex; justify-content: space-between;"><strong>Number:-</strong>28-01-065-02165</p><p style="display: flex; justify-content: space-between;"><strong>Issued Date:-</strong>2065-04-15 B.S.</p><p style="display: flex; justify-content: space-between;"><strong>Issued By:-</strong>DAO, Lalitpur</p>`,
       passport: `<h3>Passport Details</h3><hr><p style="display: flex; justify-content: space-between;"><strong>Number:-</strong><span>09954740</span></p><p style="display: flex; justify-content: space-between;"><strong>Issued Date:-</strong>17th August 2016</p><p style="display: flex; justify-content: space-between;"><strong>Expiry Date:-</strong>16th August 2026</p><p style="display: flex; justify-content: space-between;"><strong>Issued By:-</strong>MOFA</p>`,
@@ -217,38 +215,38 @@
       nid: `<h3>National ID Details</h3><hr><p style="display: flex; justify-content: space-between;"><strong>Number:-</strong>746-461-485-4</p><p style="display: flex; justify-content: space-between;"><strong>Issued Date:-</strong>N/A</p><p style="display: flex; justify-content: space-between;"><strong>Issued By:-</strong>N/A</p>`
     };
 
-    // Image URLs (placeholders)
+    // Image URLs (now arrays; ensure NO leading/trailing spaces!)
     const images = {
-      citizenship: "images/citizenship.jpg",
-      passport: "images/passport.jpg",
-      kukl: "https://via.placeholder.com/300x200?text=KUKL+Bill",
-      nead: "https://via.placeholder.com/300x200?text=NEA-Dhalachhen",
-      neag: "https://via.placeholder.com/300x200?text=NEA-Gwarko",
-      laxb: "images/creditcard.jpg",
-      gime: "https://via.placeholder.com/300x200?text=Global+IME+Bank",
-      nab: "images/Nabil_cc.jpg",
-      stck: "https://via.placeholder.com/300x200?text=Share+Certificate",
-      licn: "images/License.png", 
-      pan: "https://via.placeholder.com/300x200?text=PAN+Card",
-      voter: "images/votercard.jpg",
-      nid: "images/nationalid.jpg"
+      citizenship: ["images/citizenship.jpg", "images/citizenship_back.jpg"],
+      passport: ["images/passport.jpg", "images/passport_visa.jpg"],
+      kukl: ["https://via.placeholder.com/300x200?text=KUKL+Bill"],
+      nead: ["https://via.placeholder.com/300x200?text=NEA-Dhalachhen"],
+      neag: ["https://via.placeholder.com/300x200?text=NEA-Gwarko"],
+      laxb: ["images/creditcard.jpg"],
+      gime: ["https://via.placeholder.com/300x200?text=Global+IME+Bank"],
+      nab: ["images/Nabil_cc.jpg"],
+      stck: ["https://via.placeholder.com/300x200?text=Share+Certificate"],
+      licn: ["images/License.png"],
+      pan: ["https://via.placeholder.com/300x200?text=PAN+Front", "https://via.placeholder.com/300x200?text=PAN+Back"],
+      voter: ["images/votercard.jpg"],
+      nid: ["images/nationalid.jpg"]
     };
 
-    // Friendly names for download filenames
+    // File names for download (arrays matching images)
     const fileNames = {
-      citizenship: "Citizenship.jpg",
-      passport: "Passport.jpg",
-      kukl: "KUKL_Bill.jpg",
-      nead: "NEA_Dhalachhen.jpg",
-      neag: "NEA_Gwarko.jpg",
-      laxb: "Laxmi_Sunrise_Bank.jpg",
-      gime: "Global_IME_Bank.jpg",
-      nab: "Nabil_Credit.jpg",
-      stck: "Share_Stock.jpg",
-      licn: "Driving_Licence.png",
-      pan: "PAN_Card.jpg",
-      voter: "Voter_Card.jpg",
-      nid: "nationalid.jpg"
+      citizenship: ["Citizenship_Front.jpg", "Citizenship_Back.jpg"],
+      passport: ["Passport.jpg", "Passport_Visa.jpg"],
+      kukl: ["KUKL_Bill.jpg"],
+      nead: ["NEA_Dhalachhen.jpg"],
+      neag: ["NEA_Gwarko.jpg"],
+      laxb: ["Laxmi_Sunrise_Bank.jpg"],
+      gime: ["Global_IME_Bank.jpg"],
+      nab: ["Nabil_Credit.jpg"],
+      stck: ["Share_Stock.jpg"],
+      licn: ["Driving_Licence.png"],
+      pan: ["PAN_Front.jpg", "PAN_Back.jpg"],
+      voter: ["Voter_Card.jpg"],
+      nid: ["National_ID.jpg"]
     };
 
     let currentOption = '';
@@ -258,50 +256,47 @@
     toggleBtn.addEventListener('click', () => {
       if (!currentOption) return;
 
+      const imgUrls = images[currentOption] || [];
+      if (!imgUrls.length) return;
+
       if (isImageVisible) {
         imageSection.style.display = 'none';
-        toggleBtn.textContent = 'Show Image';
+        const plural = imgUrls.length > 1 ? 's' : '';
+        toggleBtn.textContent = `Show Image${plural}`;
         downloadBtn.style.display = 'none';
         isImageVisible = false;
       } else {
-        documentImage.src = images[currentOption];
+        imageSection.innerHTML = '';
+        imgUrls.forEach(url => {
+          const img = document.createElement('img');
+          img.src = url.trim();
+          img.alt = "Document Image";
+          imageSection.appendChild(img);
+        });
         imageSection.style.display = 'block';
-        toggleBtn.textContent = 'Hide Image';
+        const plural = imgUrls.length > 1 ? 's' : '';
+        toggleBtn.textContent = `Hide Image${plural}`;
         downloadBtn.style.display = 'block';
         isImageVisible = true;
       }
     });
 
-    // Download image function
+    // Download first image only (simple & reliable)
     downloadBtn.addEventListener('click', () => {
       if (!currentOption || !isImageVisible) return;
 
-      const img = new Image();
-      img.crossOrigin = "anonymous"; // Required for some external images
-      img.src = images[currentOption];
+      const imgUrls = images[currentOption];
+      if (!imgUrls || imgUrls.length === 0) return;
 
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
+      const firstUrl = imgUrls[0].trim();
+      const firstFileName = (fileNames[currentOption] && fileNames[currentOption][0]) || 'document.jpg';
 
-        // Convert to blob and download
-        canvas.toBlob(blob => {
-          const link = document.createElement('a');
-          link.href = URL.createObjectURL(blob);
-          link.download = fileNames[currentOption] || 'document.jpg';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          URL.revokeObjectURL(link.href);
-        }, 'image/jpeg', 0.9);
-      };
-
-      img.onerror = () => {
-        alert('Failed to load image for download.');
-      };
+      const a = document.createElement('a');
+      a.href = firstUrl;
+      a.download = firstFileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     });
 
     // Handle dropdown change
@@ -314,23 +309,25 @@
         cardContent.innerHTML = details[selectedOption];
         card.style.display = 'block';
 
-        // Show toggle button if image exists
-        if (images[selectedOption]) {
+        const imgUrls = images[selectedOption] || [];
+        if (imgUrls.length > 0) {
           toggleBtn.style.display = 'block';
-          toggleBtn.textContent = 'Show Image';
+          const plural = imgUrls.length > 1 ? 's' : '';
+          toggleBtn.textContent = `Show Image${plural}`;
           downloadBtn.style.display = 'none';
         } else {
           toggleBtn.style.display = 'none';
           downloadBtn.style.display = 'none';
         }
 
-        // Hide image section
         imageSection.style.display = 'none';
+        imageSection.innerHTML = '';
       } else {
         card.style.display = 'none';
         toggleBtn.style.display = 'none';
         downloadBtn.style.display = 'none';
         imageSection.style.display = 'none';
+        imageSection.innerHTML = '';
         currentOption = '';
       }
     });
